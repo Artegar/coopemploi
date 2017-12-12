@@ -20,6 +20,7 @@ CREATE TABLE Utilisateur(
         id_projet                  Int NOT NULL ,
         id_type_utilisateur        Int NOT NULL ,
         id_coop                    Int NOT NULL ,
+        id_profil                  Int NOT NULL ,
         PRIMARY KEY (id_utilisateur )
 )ENGINE=InnoDB;
 
@@ -213,6 +214,20 @@ CREATE TABLE entretient_individuel(
 
 
 #------------------------------------------------------------
+# Table: Profil
+#------------------------------------------------------------
+
+CREATE TABLE Profil(
+        id_profil      int (11) Auto_increment  NOT NULL ,
+        nom_profil     Varchar (255) NOT NULL ,
+        mdp_profil     Varchar (255) NOT NULL ,
+        id_utilisateur Int NOT NULL ,
+        PRIMARY KEY (id_profil ) ,
+        UNIQUE (nom_profil )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
 # Table: concerner
 #------------------------------------------------------------
 
@@ -261,6 +276,7 @@ ALTER TABLE Utilisateur ADD CONSTRAINT FK_Utilisateur_id_adresse FOREIGN KEY (id
 ALTER TABLE Utilisateur ADD CONSTRAINT FK_Utilisateur_id_projet FOREIGN KEY (id_projet) REFERENCES Projet(id_projet);
 ALTER TABLE Utilisateur ADD CONSTRAINT FK_Utilisateur_id_type_utilisateur FOREIGN KEY (id_type_utilisateur) REFERENCES Type_Utilisateur(id_type_utilisateur);
 ALTER TABLE Utilisateur ADD CONSTRAINT FK_Utilisateur_id_coop FOREIGN KEY (id_coop) REFERENCES Coop_Emploi(id_coop);
+ALTER TABLE Utilisateur ADD CONSTRAINT FK_Utilisateur_id_profil FOREIGN KEY (id_profil) REFERENCES Profil(id_profil);
 ALTER TABLE adresse ADD CONSTRAINT FK_adresse_id_code_postal FOREIGN KEY (id_code_postal) REFERENCES Code_Postal(id_code_postal);
 ALTER TABLE Code_Postal ADD CONSTRAINT FK_Code_Postal_id_ville FOREIGN KEY (id_ville) REFERENCES Ville(id_ville);
 ALTER TABLE Ville ADD CONSTRAINT FK_Ville_id_pays FOREIGN KEY (id_pays) REFERENCES Pays(id_pays);
@@ -274,6 +290,7 @@ ALTER TABLE Lieu ADD CONSTRAINT FK_Lieu_id_adresse FOREIGN KEY (id_adresse) REFE
 ALTER TABLE Coop_Emploi ADD CONSTRAINT FK_Coop_Emploi_id_adresse FOREIGN KEY (id_adresse) REFERENCES adresse(id_adresse);
 ALTER TABLE entretient_individuel ADD CONSTRAINT FK_entretient_individuel_id_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur);
 ALTER TABLE entretient_individuel ADD CONSTRAINT FK_entretient_individuel_id_projet FOREIGN KEY (id_projet) REFERENCES Projet(id_projet);
+ALTER TABLE Profil ADD CONSTRAINT FK_Profil_id_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur);
 ALTER TABLE concerner ADD CONSTRAINT FK_concerner_id_projet FOREIGN KEY (id_projet) REFERENCES Projet(id_projet);
 ALTER TABLE concerner ADD CONSTRAINT FK_concerner_id_secteur_projet FOREIGN KEY (id_secteur_projet) REFERENCES secteur_projet(id_secteur_projet);
 ALTER TABLE participer ADD CONSTRAINT FK_participer_id_reunion FOREIGN KEY (id_reunion) REFERENCES Reunion(id_reunion);
